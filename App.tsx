@@ -37,25 +37,29 @@ const Background = () => (
 );
 
 // 2. Image Placeholder Component
-const MedicalImage = ({ label, figure, isDanger = false }: { label: string, figure: string, isDanger?: boolean }) => (
-  <div className={`relative group overflow-hidden rounded-xl border-2 ${isDanger ? 'border-endo-danger/50' : 'border-endo-accent/30'} bg-black shadow-2xl transition-all duration-500 hover:scale-[1.02]`}>
-    <img 
-      src={`https://picsum.photos/seed/${label.replace(/\s/g, '')}/800/600`} 
-      alt={label} 
-      className="w-full h-64 md:h-80 object-cover opacity-80 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
-    />
-    <div className="absolute inset-0 bg-scanlines opacity-10 pointer-events-none"></div>
-    <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-sm px-3 py-1 rounded border border-white/20 text-xs font-mono text-white">
-      FIG {figure}
+const MedicalImage = ({ label, figure, isDanger = false }: { label: string, figure: string, isDanger?: boolean }) => {
+  // تبدیل figure مثلاً "22.1" به "22.1.jpg"
+  const imageUrl = `https://raw.githubusercontent.com/sanazsofe-wq/Endo-Jafari/main/${figure}.jpg`;
+  
+  return (
+    <div className={`relative group overflow-hidden rounded-xl border-2 ${isDanger ? 'border-endo-danger/50' : 'border-endo-accent/30'} bg-black shadow-2xl transition-all duration-500 hover:scale-[1.02]`}>
+      <img
+        src={imageUrl}
+        alt={label}
+        className="w-full h-64 md:h-80 object-cover opacity-80 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+      />
+      <div className="absolute inset-0 bg-scanlines opacity-10 pointer-events-none"></div>
+      <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-sm px-3 py-1 rounded border border-white/20 text-xs font-mono text-white">
+        FIG {figure}
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+        <p className="text-sm font-mono text-white/90">{label}</p>
+      </div>
+      <div className="absolute inset-0 border-[1px] border-white/10 rounded-xl pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-full h-1 bg-white/30 animate-[scan_2s_linear_infinite] pointer-events-none shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
     </div>
-    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-      <p className="text-sm font-mono text-white/90">{label}</p>
-    </div>
-    <div className="absolute inset-0 border-[1px] border-white/10 rounded-xl pointer-events-none"></div>
-    {/* Scanline overlay effect */}
-    <div className="absolute top-0 left-0 w-full h-1 bg-white/30 animate-[scan_2s_linear_infinite] pointer-events-none shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
-  </div>
-);
+  );
+};
 
 // 3. Interactive Question Box
 const QuestionBox = ({ question, answer }: { question: string, answer: string }) => {
